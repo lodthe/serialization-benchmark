@@ -11,7 +11,7 @@ func NewSerializer() *Serializer {
 }
 
 func (s *Serializer) Marshal(input interface{}) ([]byte, error) {
-	return xml.MarshalIndent(input, " ", "  ")
+	return xml.Marshal(input)
 }
 
 func (s *Serializer) Unmarshal(data []byte, output interface{}) error {
