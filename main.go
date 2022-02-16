@@ -6,12 +6,14 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/lodthe/serialization-benchmark/bench"
 	"github.com/lodthe/serialization-benchmark/format"
 	"github.com/lodthe/serialization-benchmark/format/fgob"
 	"github.com/lodthe/serialization-benchmark/format/fjson"
+	"github.com/lodthe/serialization-benchmark/format/fmsgpack"
 	"github.com/lodthe/serialization-benchmark/format/fxml"
 	"github.com/lodthe/serialization-benchmark/format/fyaml"
 	"github.com/lodthe/serialization-benchmark/sample"
@@ -29,8 +31,9 @@ func main() {
 
 	runBench(runner, "xml", fxml.NewSerializer())
 	runBench(runner, "json", fjson.NewSerializer())
-	runBench(runner, "gdb", fgob.NewSerializer())
+	runBench(runner, "gob", fgob.NewSerializer())
 	runBench(runner, "yaml", fyaml.NewSerializer())
+	runBench(runner, "msgpack", fmsgpack.NewSerializer())
 }
 
 func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
@@ -43,7 +46,7 @@ func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
 		return fmt.Sprintf("%d µs", d.Microseconds())
 	}
 
-	fmt.Printf("%s:\n", formatName)
+	fmt.Printf("%s:\n", strings.ToUpper(formatName))
 	fmt.Printf("\tMarshalled data size: %d\n", len(res.MarshalledData))
 	fmt.Printf("\tMean Marshal duration: %s\n", formatDuration(res.MarshalMeanDuration))
 	fmt.Printf("\tMean Unmarshal duration: %s\n\n\n", formatDuration(res.UnmarshalMeanDuration))
