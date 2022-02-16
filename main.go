@@ -11,6 +11,7 @@ import (
 
 	"github.com/lodthe/serialization-benchmark/bench"
 	"github.com/lodthe/serialization-benchmark/format"
+	"github.com/lodthe/serialization-benchmark/format/favro"
 	"github.com/lodthe/serialization-benchmark/format/fgob"
 	"github.com/lodthe/serialization-benchmark/format/fjson"
 	"github.com/lodthe/serialization-benchmark/format/fmsgpack"
@@ -29,6 +30,7 @@ func main() {
 		Data:              sample.Sample,
 	})
 
+	runBench(runner, "avro", favro.NewSerializer())
 	runBench(runner, "xml", fxml.NewSerializer())
 	runBench(runner, "json", fjson.NewSerializer())
 	runBench(runner, "gob", fgob.NewSerializer())
