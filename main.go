@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"path"
 	"runtime"
 	"time"
 
@@ -34,7 +36,7 @@ func main() {
 func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
 	res, err := runner.Bench(s)
 	if err != nil {
-		log.Fatalf("Bench for %s failed: %v\n", formatName, err)
+		log.Fatalf("bench for %s failed: %v\n", formatName, err)
 	}
 
 	formatDuration := func(d time.Duration) string {
@@ -45,4 +47,19 @@ func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
 	fmt.Printf("\tMarshalled data size: %d\n", len(res.MarshalledData))
 	fmt.Printf("\tMean Marshal duration: %s\n", formatDuration(res.MarshalMeanDuration))
 	fmt.Printf("\tMean Unmarshal duration: %s\n\n\n", formatDuration(res.UnmarshalMeanDuration))
+
+	saveMarshalledData(res.MarshalledData, formatName)
+}
+
+func saveMarshalledData(data []byte, format string) {
+	file, err := os.Create(path.Join("output", format+".txt"))
+	if err != nil {
+		log.Fatalf("failed to create output file for %s: %v\n", format, err)
+	}
+	defer file.Close()
+
+	_, err = fmt.Fprint(file, string(data))
+	if err != nil {
+		log.Fatalf("failed to write output file for %s: %v\n", format, err)
+	}
 }
