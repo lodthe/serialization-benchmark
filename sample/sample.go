@@ -6,13 +6,16 @@ import (
 )
 
 type User struct {
-	Name         string
+	Name    string
+	Phone   string
+	Balance float64
+
 	BirthDay     *time.Time
 	RegisteredAt time.Time
-	Phone        string
-	Balance      float64
+
 	ShoppingCart ShoppingCart
-	Blocked      bool
+
+	Blocked bool
 }
 
 type ShoppingCart map[string]CartItem
@@ -34,6 +37,21 @@ type Item struct {
 
 	Price  float64
 	Weight float32
+}
+
+func (u *User) ToUTC() {
+	u.RegisteredAt = u.RegisteredAt.UTC()
+	if u.BirthDay != nil {
+		t := u.BirthDay.UTC()
+		u.BirthDay = &t
+	}
+
+	for id, cart := range u.ShoppingCart {
+		if cart.Item.CreatedAt != cart.Item.CreatedAt.UTC() {
+			cart.Item.CreatedAt = cart.Item.CreatedAt.UTC()
+			u.ShoppingCart[id] = cart
+		}
+	}
 }
 
 var Sample User
@@ -80,6 +98,8 @@ func init() {
 			Quantity: int32(rand.Intn(10) + 1),
 		}
 	}
+
+	Sample.ToUTC()
 }
 
 func genString(n int) string {

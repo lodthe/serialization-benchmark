@@ -1,6 +1,7 @@
 package bench
 
 import (
+	"fmt"
 	"reflect"
 	"time"
 
@@ -78,9 +79,11 @@ func (r *Runner) validateUnmarshalling(s format.Serializer, res *Result) error {
 		return errors.Wrap(err, "Unmarshal failed")
 	}
 
+	unmarshalled.ToUTC()
+
 	if !reflect.DeepEqual(r.config.Data, *unmarshalled) {
-		// fmt.Println(*unmarshalled)
-		// fmt.Println(r.config.Data)
+		fmt.Println(*unmarshalled)
+		fmt.Println(r.config.Data)
 		return errors.New("output differs from the input")
 	}
 

@@ -6,7 +6,7 @@ import (
 	"github.com/hamba/avro"
 )
 
-type Serializer struct{
+type Serializer struct {
 	schema avro.Schema
 }
 

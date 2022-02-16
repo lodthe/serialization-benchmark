@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = ".;fprotobuf";
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+  string name = 1;
+  string phone = 2;
+  double balance = 3;
+
+  optional google.protobuf.Timestamp birthday = 4;
+  google.protobuf.Timestamp registered_at = 5;
+
+  map<string, CartItem> shopping_cart = 6;
+
+  bool blocked = 7;
+}
+
+message CartItem {
+  Item item = 1;
+  int32 quantity = 2;
+}
+
+message Item {
+  string id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  bool visible = 3;
+  int32 owner_id = 4;
+
+  string name = 5;
+  optional string description = 6;
+  repeated string keywords = 7;
+
+  double price = 8;
+  float weight = 9;
+}

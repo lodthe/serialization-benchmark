@@ -1,3 +1,5 @@
+//go:generate protoc --go_out=./format/fprotobuf ./format/fprotobuf/schema.proto
+
 package main
 
 import (
@@ -15,6 +17,7 @@ import (
 	"github.com/lodthe/serialization-benchmark/format/fgob"
 	"github.com/lodthe/serialization-benchmark/format/fjson"
 	"github.com/lodthe/serialization-benchmark/format/fmsgpack"
+	"github.com/lodthe/serialization-benchmark/format/fprotobuf"
 	"github.com/lodthe/serialization-benchmark/format/fxml"
 	"github.com/lodthe/serialization-benchmark/format/fyaml"
 	"github.com/lodthe/serialization-benchmark/sample"
@@ -25,17 +28,18 @@ func main() {
 	runtime.GOMAXPROCS(1)
 
 	runner := bench.NewRunner(bench.Config{
-		DurationThreshold: 3 * time.Second,
+		DurationThreshold: 10 * time.Second,
 		SerialRunCount:    50,
 		Data:              sample.Sample,
 	})
 
 	runBench(runner, "avro", favro.NewSerializer())
-	runBench(runner, "xml", fxml.NewSerializer())
-	runBench(runner, "json", fjson.NewSerializer())
-	runBench(runner, "gob", fgob.NewSerializer())
-	runBench(runner, "yaml", fyaml.NewSerializer())
+	runBench(runner, "protobuf", fprotobuf.NewSerializer())
 	runBench(runner, "msgpack", fmsgpack.NewSerializer())
+	runBench(runner, "gob", fgob.NewSerializer())
+	runBench(runner, "json", fjson.NewSerializer())
+	runBench(runner, "xml", fxml.NewSerializer())
+	runBench(runner, "yaml", fyaml.NewSerializer())
 }
 
 func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
