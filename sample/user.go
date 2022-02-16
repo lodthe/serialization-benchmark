@@ -43,7 +43,7 @@ func init() {
 
 	Sample = User{
 		Name:         "Joanne Rowling",
-		RegisteredAt: time.Now().Truncate(time.Second),
+		RegisteredAt: time.Now().Truncate(time.Millisecond),
 		Phone:        "+1 123 14992 91249",
 		Balance:      32929.12223412,
 		ShoppingCart: make(map[string]CartItem),
@@ -52,22 +52,22 @@ func init() {
 
 	var keywords []string
 	for i := 0; i < 100; i++ {
-		keywords = append(keywords, "k"+genString(10))
+		keywords = append(keywords, "k"+genName(10))
 	}
 
 	for i := 0; i < 100; i++ {
 		item := Item{
-			ID:        genString(35),
-			CreatedAt: time.Now().Truncate(time.Second),
+			ID:        genName(35),
+			CreatedAt: time.Now().Truncate(time.Millisecond),
 			Visible:   rand.Intn(10) > 0,
 			OwnerID:   int64(rand.Int()),
-			Name:      genString(50),
+			Name:      genName(50),
 			Price:     rand.Float64(),
 			Weight:    rand.Float32(),
 		}
 
 		if rand.Intn(10) > 0 {
-			tmp := genString(300)
+			tmp := genString(1000)
 			item.Description = &tmp
 		}
 
@@ -85,7 +85,16 @@ func init() {
 func genString(n int) string {
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
-		b[i] = byte(32 + rand.Intn(125-32))
+		b[i] = 32 + byte(rand.Intn(125-32))
+	}
+
+	return string(b)
+}
+
+func genName(n int) string {
+	b := make([]byte, n)
+	for i := 0; i < n; i++ {
+		b[i] = 'A' + byte(rand.Intn(26))
 	}
 
 	return string(b)

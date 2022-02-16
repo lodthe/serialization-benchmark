@@ -10,6 +10,7 @@ import (
 	"github.com/lodthe/serialization-benchmark/format"
 	"github.com/lodthe/serialization-benchmark/format/fgob"
 	"github.com/lodthe/serialization-benchmark/format/fjson"
+	"github.com/lodthe/serialization-benchmark/format/fxml"
 	"github.com/lodthe/serialization-benchmark/format/fyaml"
 	"github.com/lodthe/serialization-benchmark/sample"
 )
@@ -24,9 +25,10 @@ func main() {
 		Data:              sample.Sample,
 	})
 
-	runBench(runner, "JSON", fjson.NewSerializer())
-	runBench(runner, "GOB", fgob.NewSerializer())
-	runBench(runner, "YAML", fyaml.NewSerializer())
+	runBench(runner, "xml", fxml.NewSerializer())
+	runBench(runner, "json", fjson.NewSerializer())
+	runBench(runner, "gdb", fgob.NewSerializer())
+	runBench(runner, "yaml", fyaml.NewSerializer())
 }
 
 func runBench(runner *bench.Runner, formatName string, s format.Serializer) {
