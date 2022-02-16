@@ -11,9 +11,11 @@ type User struct {
 	RegisteredAt time.Time
 	Phone        string
 	Balance      float64
-	ShoppingCart map[string]CartItem
+	ShoppingCart ShoppingCart
 	Blocked      bool
 }
+
+type ShoppingCart map[string]CartItem
 
 type CartItem struct {
 	Item     Item
