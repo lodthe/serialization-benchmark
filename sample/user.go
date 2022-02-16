@@ -26,7 +26,7 @@ type Item struct {
 	ID        string
 	CreatedAt time.Time
 	Visible   bool
-	OwnerID   int64
+	OwnerID   uint32
 
 	Name        string
 	Description *string
@@ -60,14 +60,14 @@ func init() {
 			ID:        genName(35),
 			CreatedAt: time.Now().Truncate(time.Millisecond),
 			Visible:   rand.Intn(10) > 0,
-			OwnerID:   int64(rand.Int()),
+			OwnerID:   rand.Uint32(),
 			Name:      genName(50),
 			Price:     rand.Float64(),
 			Weight:    rand.Float32(),
 		}
 
 		if rand.Intn(10) > 0 {
-			tmp := genString(1000)
+			tmp := genString(700)
 			item.Description = &tmp
 		}
 
