@@ -71,3 +71,15 @@ type Item struct {
 	Weight float32
 }
 ```
+
+## Results
+
+|  Method  | Marshalled data size (bytes) | Mean Marshal time (µs) | Mean Unmarshal time (µs) |
+|:--------:|:----------------------------:|:-------------------------:|:---------------------------:|
+|   avro   |             86302            |             94            |             159             |
+| protobuf |             87389            |            130            |             238             |
+|    gob   |             87130            |            281            |             288             |
+|  msgpack |             94001            |            200            |             297             |
+|   json   |            113024            |            523            |             1624            |
+|    xml   |            132550            |            1355           |             5214            |
+|   yaml   |            113957            |            5318           |             5151            |
