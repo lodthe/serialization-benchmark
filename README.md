@@ -8,9 +8,9 @@ Comparison of different serialization methods in Go.
 - [xml](https://pkg.go.dev/encoding/xml)
 - [gob](https://golang.org/pkg/encoding/gob)
 - [yaml](https://pkg.go.dev/gopkg.in/yaml.v2)
-- [MessagePack](github.com/vmihailenco/msgpack)
-- [Avro (hamba)](github.com/hamba/avro)
-- [Protobuf](github.com/golang/protobuf)
+- [MessagePack](https://github.com/vmihailenco/msgpack)
+- [Avro (hamba)](https://github.com/hamba/avro)
+- [Protobuf](https://github.com/golang/protobuf)
 
 ## Running
 
